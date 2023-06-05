@@ -1,6 +1,8 @@
 #ifndef __CLIENTLOGIC_H__
 #define __CLIENTLOGIC_H__
 
+#include "D3DMain.h"
+
 typedef struct _tClientTimer
 {
 	double dSecondsPerCnt;
@@ -12,21 +14,25 @@ typedef struct _tClientTimer
 	__int64 llCurrTime;
 	cdxBool nStopped;
 
-	void(*init)(void** ppInstance);
-	void(*Reset);
-	void(*Start);
-	void(*Stop);
+	void(*Reset)(struct _tClientTimer* ptInstance);
+	void(*Record)(struct _tClientTimer* ptInstance);
+	void(*Start)(struct _tClientTimer* ptInstance);
+	void(*Stop)(struct _tClientTimer* ptInstance);
+	const float(*GetTotalTime)(struct _tClientTimer* ptInstance);
 	
 } CLIENTTIMER, *LPCLIENTTIMER;
 
 void SetKeyActiveMap(unsigned long ulActiveStauts, unsigned int unNegation);
 void GetKeyActiveMap();
-const int GetNumBinaryBits(long lNum);
-void thLogA(const CHAR* cszpText, ...);
+const int GetNumBinaryBits(unsigned long lNum);
+const float GetClientFPS(LPCLIENTTIMER ptTimer);
 
 void ClientTimerInit(LPCLIENTTIMER* pptInstance);
-void ClientTimerReset();
-void ClientTimerStart();
-void ClientTimerStop();
+void ClientTimerReset(LPCLIENTTIMER ptTimer);
+void ClientTimerRecording(LPCLIENTTIMER ptTimer);
+void ClientTimerStart(LPCLIENTTIMER ptTimer);
+void ClientTimerStop(LPCLIENTTIMER ptTimer);
+const float GetClientTimerTotalTime(LPCLIENTTIMER ptTimer);
 
+void thLogA(const CHAR* cszpText, ...);
 #endif

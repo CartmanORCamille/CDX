@@ -30,6 +30,12 @@
     <ClCompile Include="..\Classes\ClientLogic.c">
       <Filter>Source Files\D3D</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\D3DUpdate.c">
+      <Filter>Source Files\D3D</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\D3DRender.c">
+      <Filter>Source Files\D3D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\Include\stdafx.h">

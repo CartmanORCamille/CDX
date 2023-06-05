@@ -149,6 +149,8 @@
   <ItemGroup>
     <ClCompile Include="..\Classes\ClientLogic.c" />
     <ClCompile Include="..\Classes\D3DInit.c" />
+    <ClCompile Include="..\Classes\D3DRender.c" />
+    <ClCompile Include="..\Classes\D3DUpdate.c" />
     <ClCompile Include="..\Classes\main.c" />
   </ItemGroup>
   <ItemGroup>

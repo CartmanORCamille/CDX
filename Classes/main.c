@@ -5,7 +5,10 @@
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nShowCmd)
 {
 	int nRet						= C_FALSE;
+	float fFPS = 0.f;
 	BOOL bFnRet						= FALSE;
+	// window variable.
+	WCHAR wszarrTitle[512]			= { 0 };
 	HWND hWindow					= NULL;
 	MSG tMsg						= { 0 };
 	RECT rcWindow					= { 0, 0, WINDOW_MAX_WIDTH, WINDOW_MAX_HIGH };
@@ -25,6 +28,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		WINDOW_TITLE_W
 	};
 
+	// D3D
+	CDXDISPATCH tCdxDispatch = { 0 };
+
+	// timer variable.
+	LPCLIENTTIMER ptCdxTimer = NULL;
+
 	AdjustWindowRect(&rcWindow, WS_OVERLAPPEDWINDOW, FALSE);
 	if (!RegisterClassEx(&wndClass))
 	{
@@ -40,8 +49,22 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	ShowWindow(hWindow, nShowCmd);
 	UpdateWindow(hWindow);
 
+	nRet = CdxInit(hWindow, &tCdxDispatch);
+	TH_CHECKERR_NEGATIVE(nRet);
+	ClientTimerInit(&ptCdxTimer);
+	TH_CHECKERR_FALSE(ptCdxTimer);
+
+	ptCdxTimer->Reset(ptCdxTimer);
 	while (WM_QUIT != tMsg.message)
 	{
+		ptCdxTimer->Record(ptCdxTimer);
+
+		fFPS = GetClientFPS(ptCdxTimer);
+		if (0.f < fFPS)
+		{
+			swprintf_s(wszarrTitle, MAX_PATH, L"%s - fps: %0.2f", WINDOW_TITLE_W, fFPS);
+			SetWindowText(hWindow, wszarrTitle);
+		}
 		if (PeekMessage(&tMsg, NULL, NULL, NULL, PM_REMOVE))
 		{
 			TranslateMessage(&tMsg);
@@ -50,10 +73,14 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		}
 		else
 		{
-			
+			nRet = CdxUpdate(&tCdxDispatch);
+			TH_CHECKERR_NEGATIVE(nRet);
+			nRet = CdxRender(&tCdxDispatch);
+			TH_CHECKERR_NEGATIVE(nRet);
 		}
 	}
 
+	free(ptCdxTimer);
 	nRet = C_TRUE;
 
 Exit0:
