@@ -8,7 +8,6 @@ int CdxInit(HWND hWindow, CDXDISPATCH_PTR ptCdx)
 	D3D_FEATURE_LEVEL					emFeatureLevel;
 	UINT unDeviceFlag					= 0;
 	UINT unM4xMsaaQuality				= 0;
-	ID3D11Device* pD3d					= NULL;
 	DXGI_SWAP_CHAIN_DESC tSwapChainDesc = { 0 };
 	D3D11_TEXTURE2D_DESC tZBufferDesc	= { 0 };
 	D3D11_VIEWPORT tViewPort = { 0 };
@@ -56,38 +55,38 @@ int CdxInit(HWND hWindow, CDXDISPATCH_PTR ptCdx)
 
 	hFnRet = D3D11CreateDevice(
 		NULL, D3D_DRIVER_TYPE_HARDWARE, 0, unDeviceFlag, NULL, 0,
-		D3D11_SDK_VERSION, &pD3d, &emFeatureLevel, &(ptCdx->pD3dContext)
+		D3D11_SDK_VERSION, &(ptCdx->pD3d), &emFeatureLevel, &(ptCdx->pD3dContext)
 	);
 	TH_CHECKERR_FAILED(hFnRet);
 
 	// create msaa.
-	hFnRet = pD3d->lpVtbl->CheckMultisampleQualityLevels(pD3d, DXGI_FORMAT_R8G8B8A8_UINT, 4, &unM4xMsaaQuality);
+	hFnRet = ptCdx->pD3d->lpVtbl->CheckMultisampleQualityLevels(ptCdx->pD3d, DXGI_FORMAT_R8G8B8A8_UINT, 4, &unM4xMsaaQuality);
 	ASSERT(0 < unM4xMsaaQuality);
 	tSwapChainDesc.SampleDesc.Count = 4;
 	tSwapChainDesc.SampleDesc.Quality = unM4xMsaaQuality - 1;
 	
 	// create swap chain.
-	hFnRet = pD3d->lpVtbl->QueryInterface(pD3d, &IID_IDXGIDevice, (void**)&pDxgiDevice);
+	hFnRet = ptCdx->pD3d->lpVtbl->QueryInterface(ptCdx->pD3d, &IID_IDXGIDevice, (void**)&pDxgiDevice);
 	TH_CHECKERR_FAILED(hFnRet);
 	hFnRet = pDxgiDevice->lpVtbl->GetParent(pDxgiDevice, &IID_IDXGIAdapter, (void**)&pDxgiAdapter);
 	TH_CHECKERR_FAILED(hFnRet);
 	hFnRet = pDxgiAdapter->lpVtbl->GetParent(pDxgiAdapter, &IID_IDXGIFactory, (void**)&pDxgiFactory);
 	TH_CHECKERR_FAILED(hFnRet);
-	hFnRet = pDxgiFactory->lpVtbl->CreateSwapChain(pDxgiFactory, pD3d, &tSwapChainDesc, &(ptCdx->pDxgiSwapChain));
+	hFnRet = pDxgiFactory->lpVtbl->CreateSwapChain(pDxgiFactory, ptCdx->pD3d, &tSwapChainDesc, &(ptCdx->pDxgiSwapChain));
 	TH_CHECKERR_FAILED(hFnRet);
 
 	// create render target.
 	hFnRet = ptCdx->pDxgiSwapChain->lpVtbl->GetBuffer(ptCdx->pDxgiSwapChain, 0, &IID_ID3D11Texture2D, (void**)&pBackBuffterTex);
 	TH_CHECKERR_FAILED(hFnRet);
-	hFnRet = pD3d->lpVtbl->CreateRenderTargetView(pD3d, pBackBuffterTex, NULL, &(ptCdx->pRenderTargetView));
+	hFnRet = ptCdx->pD3d->lpVtbl->CreateRenderTargetView(ptCdx->pD3d, pBackBuffterTex, NULL, &(ptCdx->pRenderTargetView));
 	TH_CHECKERR_FAILED(hFnRet);
 
 	// create z-buffer and depth render target.
 	tZBufferDesc.SampleDesc.Count = 4;
 	tZBufferDesc.SampleDesc.Quality = unM4xMsaaQuality - 1;
-	hFnRet = pD3d->lpVtbl->CreateTexture2D(pD3d, &tZBufferDesc, NULL, &pDepthStencilBuffterTex);
+	hFnRet = ptCdx->pD3d->lpVtbl->CreateTexture2D(ptCdx->pD3d, &tZBufferDesc, NULL, &pDepthStencilBuffterTex);
 	TH_CHECKERR_FAILED(hFnRet);
-	hFnRet = pD3d->lpVtbl->CreateDepthStencilView(pD3d, pDepthStencilBuffterTex, NULL, &(ptCdx->pDepthStencilView));
+	hFnRet = ptCdx->pD3d->lpVtbl->CreateDepthStencilView(ptCdx->pD3d, pDepthStencilBuffterTex, NULL, &(ptCdx->pDepthStencilView));
 	TH_CHECKERR_FAILED(hFnRet);
 
 	// bind OM.
@@ -99,7 +98,6 @@ int CdxInit(HWND hWindow, CDXDISPATCH_PTR ptCdx)
 	nRet = C_TRUE;
 
 Exit0:
-	TH_C_COM_RELEASE(pD3d);
 	TH_C_COM_RELEASE(pDxgiDevice);
 	TH_C_COM_RELEASE(pDxgiAdapter);
 	TH_C_COM_RELEASE(pDxgiFactory);

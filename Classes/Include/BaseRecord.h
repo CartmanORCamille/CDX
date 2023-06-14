@@ -20,7 +20,7 @@
 #else
 #endif
 
-#define TH_COM_RELEASE(pCom) { if(pCom) { (pCom)->Release(); (pCom)  NULL; } }
+#define TH_COM_RELEASE(pCom) { if(pCom) { (pCom)->Release(); (pCom) = NULL; } }
 #define TH_C_COM_RELEASE(pCom) { if(pCom) { (pCom)->lpVtbl->Release(pCom); (pCom) = NULL;} }
 #define TH_FREE(p) { if(p) { free(p); (p) = NULL; } }
 #define TH_CHECKERR_FALSE(condition)																							\

@@ -1,5 +1,5 @@
-#include "stdafx.h"
 #include "ClientLogic.h"
+
 
 #define KEYACTIVEMAP_SIZE 2
 byte g_bKeyActiveMap[KEYACTIVEMAP_SIZE] = { 0 };
@@ -161,7 +161,7 @@ void ClientTimerStop(LPCLIENTTIMER ptTimer)
 	ptTimer->nStopped = C_TRUE;
 
 Exit0:
-	return 0;
+	return;
 }
 
 const float GetClientTimerTotalTime(LPCLIENTTIMER ptTimer)

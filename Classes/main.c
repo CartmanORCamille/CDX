@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "ClientLogic.h"
 
-
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nShowCmd)
 {
 	int nRet						= C_FALSE;
@@ -18,8 +17,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		sizeof(WNDCLASSEX),
 		CS_HREDRAW | CS_VREDRAW,
 		MainWndProc,
-		NULL,
-		NULL,
+		0,
+		0,
 		hInstance,
 		hIcon,
 		LoadCursor(NULL, IDC_ARROW),
@@ -55,6 +54,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	TH_CHECKERR_FALSE(ptCdxTimer);
 
 	ptCdxTimer->Reset(ptCdxTimer);
+
+	nRet = P1_ExternCMain(&tCdxDispatch, NULL);
+	TH_CHECKERR_NEGATIVE(nRet);
+	
 	while (WM_QUIT != tMsg.message)
 	{
 		ptCdxTimer->Record(ptCdxTimer);
@@ -65,7 +68,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			swprintf_s(wszarrTitle, MAX_PATH, L"%s - fps: %0.2f", WINDOW_TITLE_W, fFPS);
 			SetWindowText(hWindow, wszarrTitle);
 		}
-		if (PeekMessage(&tMsg, NULL, NULL, NULL, PM_REMOVE))
+		if (PeekMessage(&tMsg, NULL, 0, 0, PM_REMOVE))
 		{
 			TranslateMessage(&tMsg);
 			DispatchMessage(&tMsg);

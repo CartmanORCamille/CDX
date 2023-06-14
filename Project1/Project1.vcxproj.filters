@@ -19,6 +19,21 @@
     <Filter Include="Header Files\D3DInclude">
       <UniqueIdentifier>{eb9e1739-c9b1-48fe-919f-05b222dfa903}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\D3DProjectText">
+      <UniqueIdentifier>{1cc021aa-273e-4226-ae7d-848b9dc525c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\D3DProjectTest">
+      <UniqueIdentifier>{4795dc37-e834-4372-be95-e52790628485}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\D3DProjectTest\P1_Vertex">
+      <UniqueIdentifier>{b48efc33-d2ee-4248-93c6-2125406cb96d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\D3DProjectText\P1_Vertex">
+      <UniqueIdentifier>{b1391a04-0a12-4e57-8603-8ed458336d22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FX">
+      <UniqueIdentifier>{96e8fa24-b326-4bfd-9a7e-b039c88a9d71}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\main.c">
@@ -36,6 +51,9 @@
     <ClCompile Include="..\Classes\D3DRender.c">
       <Filter>Source Files\D3D</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\P1_Vertex.cpp">
+      <Filter>Source Files\D3DProjectText\P1_Vertex</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\Include\stdafx.h">
@@ -50,5 +68,19 @@
     <ClInclude Include="..\Classes\Include\ClientLogic.h">
       <Filter>Header Files\D3DInclude</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\Include\CDX_D3DColor.h">
+      <Filter>Header Files\D3DInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Include\P1_Vertex.h">
+      <Filter>Header Files\D3DProjectTest\P1_Vertex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Include\CDX_D3DMath.h">
+      <Filter>Header Files\D3DInclude</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\FX\P1.fx">
+      <Filter>FX</Filter>
+    </None>
   </ItemGroup>
 </Project>
