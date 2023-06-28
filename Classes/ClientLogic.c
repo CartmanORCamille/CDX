@@ -9,7 +9,7 @@ void SetKeyActiveMap(unsigned long ulActiveStauts, unsigned int unNegation)
 {
 	const int cnStatusBits = GetNumBinaryBits(ulActiveStauts);
 	const int cnArrPos = cnStatusBits / 8;
-	const int cnBitPos = cnStatusBits % 8;
+	const int cnBitPos = (cnStatusBits % 8) - 1;
 
 	if (KEYACTIVE == unNegation)
 	{
@@ -24,17 +24,21 @@ void SetKeyActiveMap(unsigned long ulActiveStauts, unsigned int unNegation)
 	
 }
 
-void GetKeyActiveMap()
+void GetKeyActiveMap(int nTargetBit, int* pnRes)
 {
-	byte bTmp = 0;
-	for (int i = 0; i < KEYACTIVEMAP_SIZE; i++)
-	{
-		for (int j = 0; j < 8; j++)
-		{
-			bTmp = g_bKeyActiveMap[i] << j;
+	const int cnArrPos = nTargetBit / 8;
+	const int cnBitPos = (nTargetBit % 8) - 1;
 
-		}
-		THLOG("arr %d, bit: %d\n", i, g_bKeyActiveMap[i]);
+
+}
+
+void GetKeyActiveMapEx(const int nFlags, int* pnRes)
+{
+	const int cnTargetBit = GetNumBinaryBits(nFlags);
+	const int cnArrPos = cnTargetBit / 8;
+	if (nFlags >> (8 * cnArrPos) == g_bKeyActiveMap[cnArrPos])
+	{
+		*pnRes = C_TRUE;
 	}
 }
 

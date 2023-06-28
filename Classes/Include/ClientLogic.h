@@ -3,6 +3,8 @@
 
 #include "D3DMain.h"
 
+#define THCALLBACK(fnName) void(*fnName)(CDXDISPATCH_PTR ptCdx, void* vpProjectData)
+
 typedef struct _tClientTimer
 {
 	double dSecondsPerCnt;
@@ -22,8 +24,11 @@ typedef struct _tClientTimer
 	
 } CLIENTTIMER, *LPCLIENTTIMER;
 
+extern DWORD g_dwTotalTick;
+
 void SetKeyActiveMap(unsigned long ulActiveStauts, unsigned int unNegation);
-void GetKeyActiveMap();
+void GetKeyActiveMap(int nTargetBit, int* pnRes);
+void GetKeyActiveMapEx(int nFlags, int* pnRes);
 const int GetNumBinaryBits(unsigned long lNum);
 const float GetClientFPS(LPCLIENTTIMER ptTimer);
 

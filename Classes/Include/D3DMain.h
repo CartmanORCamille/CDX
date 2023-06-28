@@ -9,6 +9,14 @@
 #include <d3dx11effect.h>
 
 
+struct _tXYZ
+{
+	float fX;
+	float fY;
+	float fZ;
+};
+typedef struct _tXYZ TH_XYZ, * TH_XYZ_PTR;
+
 struct _tCdxDispatch
 {
 	float fFps;

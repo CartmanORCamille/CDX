@@ -122,6 +122,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <CompileAs>Default</CompileAs>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -137,6 +138,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <CompileAs>Default</CompileAs>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -152,6 +154,7 @@
     <ClCompile Include="..\Classes\D3DRender.c" />
     <ClCompile Include="..\Classes\D3DUpdate.c" />
     <ClCompile Include="..\Classes\main.c" />
+    <ClCompile Include="..\Classes\P1_KeyboardEvent.cpp" />
     <ClCompile Include="..\Classes\P1_Vertex.cpp" />
   </ItemGroup>
   <ItemGroup>

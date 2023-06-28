@@ -21,6 +21,8 @@
 #define KEYACTIVE		1
 #define KEYSHUT			0
 
+#define LIMIT_FRAMEMS	16.67
+
 typedef int cdxBool;
 
 LRESULT CALLBACK MainWndProc(HWND hWnd, UINT unMsg, WPARAM wParam, LPARAM lParam);

@@ -54,6 +54,9 @@
     <ClCompile Include="..\Classes\P1_Vertex.cpp">
       <Filter>Source Files\D3DProjectText\P1_Vertex</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\P1_KeyboardEvent.cpp">
+      <Filter>Source Files\D3DProjectText\P1_Vertex</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\Include\stdafx.h">

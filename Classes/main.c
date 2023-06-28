@@ -1,11 +1,14 @@
 #include "stdafx.h"
 #include "ClientLogic.h"
 
+DWORD g_dwTotalTick = 0;
+
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nShowCmd)
 {
 	int nRet						= C_FALSE;
-	float fFPS = 0.f;
+	float fFPS						= 0.f;
 	BOOL bFnRet						= FALSE;
+	DWORD dwTick					= 0;
 	// window variable.
 	WCHAR wszarrTitle[512]			= { 0 };
 	HWND hWindow					= NULL;
@@ -76,10 +79,15 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		}
 		else
 		{
-			nRet = CdxUpdate(&tCdxDispatch);
-			TH_CHECKERR_NEGATIVE(nRet);
-			nRet = CdxRender(&tCdxDispatch);
-			TH_CHECKERR_NEGATIVE(nRet);
+			dwTick = GetTickCount();
+			if (LIMIT_FRAMEMS <= dwTick - g_dwTotalTick)
+			{
+				nRet = CdxUpdate(&tCdxDispatch);
+				TH_CHECKERR_NEGATIVE(nRet);
+				nRet = CdxRender(&tCdxDispatch);
+				TH_CHECKERR_NEGATIVE(nRet);
+			}
+			
 		}
 	}
 
@@ -124,7 +132,6 @@ LRESULT CALLBACK MainWndProc(HWND hWnd, UINT unMsg, WPARAM wParam, LPARAM lParam
 			// K
 			SetKeyActiveMap(KEYACTIVE_K, KEYACTIVE);
 		}
-		GetKeyActiveMap();
 		break;
 
 	case WM_KEYUP:

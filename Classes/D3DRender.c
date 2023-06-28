@@ -1,5 +1,5 @@
 #include "D3DMain.h"
-
+#include "ClientLogic.h"
 
 int CdxRender(CDXDISPATCH_PTR ptCdx)
 {
@@ -8,7 +8,7 @@ int CdxRender(CDXDISPATCH_PTR ptCdx)
 	HRESULT hrRet = E_FAIL;
 
 	P1_ExternCRender(ptCdx, NULL);
-
+	g_dwTotalTick = GetTickCount();
 	nResult = C_TRUE;
 Exit0:
 	return nResult;

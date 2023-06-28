@@ -19,6 +19,7 @@ VertexOut VS(VertexIn vin)
 {
 	VertexOut vout;
 	vout.PosH = mul(float4(vin.PosL, 1.0f), gWorldViewProj);
+	//vout.PosH = vin.PosL;
 	vout.Color = vin.Color;
 	return vout;
 }
@@ -28,14 +29,14 @@ float4 PS(VertexOut pin) : SV_Target
 	return pin.Color;
 }
 
-/*
-RasterizerState Wireframe
+
+RasterizerState RS
 {
-	FillMode = Wireframe;
+	FillMode = Solid;
 	CullMode = Back;
 	FrontCounterClockwise = false;
 };
-*/
+
 
 technique11 ColorTech
 {
@@ -43,6 +44,6 @@ technique11 ColorTech
 	{
 		SetVertexShader(CompileShader(vs_5_0, VS()));
 		SetPixelShader(CompileShader(ps_5_0, PS()));
-		//SetRasterizerState(Wireframe);
+		//SetRasterizerState(RS);
 	}
 }

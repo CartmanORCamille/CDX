@@ -4,7 +4,7 @@
 
 #include <DirectXMath.h>
 
-
+#define CDX_PI 3.1415926
 
 
 
